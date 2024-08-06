@@ -23,6 +23,9 @@ export async function POST(req: Request) {
       const { order_id, billing_anchor, status, custom_data } = body.data.attributes;
       const { plan, credits, buyerId } = custom_data || {};
 
+      console.log(custom_data);
+      console.log(body.data.attributes);
+
       const transaction = {
         orderId: order_id, // Using Lemon Squeezy order ID as orderId for consistency
         amount: parseFloat(billing_anchor),
@@ -31,6 +34,8 @@ export async function POST(req: Request) {
         buyerId: buyerId || "",
         createdAt: new Date(),
       };
+
+      console.log(transaction);
 
       const newTransaction = await createTransaction(transaction);
       
