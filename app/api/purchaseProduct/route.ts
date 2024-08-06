@@ -31,9 +31,9 @@ export async function POST(req: Request) {
         attributes: {
           checkout_data: {
             custom: {
-              plan,
-              credits,
-              buyerId,
+              plan: plan,
+              credits: credits.toString(),
+              buyerId: buyerId,
             },
           },
         },
