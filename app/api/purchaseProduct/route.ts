@@ -1,6 +1,4 @@
 import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/database/mongoose';
-import Transaction from '@/lib/database/models/transaction.model';
 import axios from "axios";
 
 export const dynamic = "force-dynamic";
