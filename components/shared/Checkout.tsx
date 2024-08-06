@@ -1,11 +1,8 @@
 "use client";
 
-import { loadStripe } from "@stripe/stripe-js";
-import { useEffect } from "react";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
-import { checkoutCredits } from "@/lib/actions/transaction.action";
-
 import { Button } from "../ui/button";
 
 const Checkout = ({
@@ -13,17 +10,16 @@ const Checkout = ({
   amount,
   credits,
   buyerId,
+  variantId,
 }: {
   plan: string;
   amount: number;
   credits: number;
   buyerId: string;
+  variantId: string;
 }) => {
   const { toast } = useToast();
-
-  useEffect(() => {
-    loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-  }, []);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -48,28 +44,42 @@ const Checkout = ({
   }, []);
 
   const onCheckout = async () => {
-    const transaction = {
-      plan,
-      amount,
-      credits,
-      buyerId,
-    };
-
-    await checkoutCredits(transaction);
+    setIsLoading(true);
+    try {
+      const response = await axios.post("/api/purchaseProduct", {
+        variantId,
+        plan,
+        amount,
+        credits,
+        buyerId,
+      });
+      
+      if (response.data.checkoutUrl) {
+        window.open(response.data.checkoutUrl, "_blank");
+      } else {
+        throw new Error("Checkout URL not received");
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Checkout failed",
+        description: "An error occurred while processing your request",
+        duration: 5000,
+        className: "error-toast",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <form action={onCheckout} method="POST">
-      <section>
-        <Button
-          type="submit"
-          role="link"
-          className="w-full rounded-full bg-purple-gradient bg-cover"
-        >
-          Buy Credit
-        </Button>
-      </section>
-    </form>
+    <Button
+      onClick={onCheckout}
+      disabled={isLoading}
+      className="w-full rounded-full bg-purple-gradient bg-cover"
+    >
+      {isLoading ? "Processing..." : "Buy Credit"}
+    </Button>
   );
 };
 

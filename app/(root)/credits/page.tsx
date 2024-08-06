@@ -62,10 +62,11 @@ const Credits = async () => {
               ) : (
                 <SignedIn>
                   <Checkout
-                    plan={plan.name}
-                    amount={plan.price}
-                    credits={plan.credits}
-                    buyerId={user._id}
+                      plan={plan.name}
+                      amount={plan.price}
+                      credits={plan.credits}
+                      buyerId={user._id}
+                      variantId={plan.variantId!}
                   />
                 </SignedIn>
               )}

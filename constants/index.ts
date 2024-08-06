@@ -71,7 +71,8 @@ export const plans = [
     _id: 2,
     name: "Pro Package",
     icon: "/assets/icons/free-plan.svg",
-    price: 40,
+    variantId: process.env.LEMON_SQUEEZY_PRO_VARIANT_ID,
+    price: 4,
     credits: 120,
     inclusions: [
       {
@@ -96,8 +97,9 @@ export const plans = [
     _id: 3,
     name: "Premium Package",
     icon: "/assets/icons/free-plan.svg",
-    price: 199,
+    price: 19,
     credits: 2000,
+    variantId: process.env.LEMON_SQUEEZY_PREMIUM_VARIANT_ID,
     inclusions: [
       {
         label: "2000 Credits",
