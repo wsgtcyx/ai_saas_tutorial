@@ -6,8 +6,8 @@ import axios from "axios";
 export const dynamic = "force-dynamic";
 
 
-export const LEMON_SQUEEZY_ENDPOINT = "https://api.lemonsqueezy.com/v1/";
-export const lemonSqueezyApiInstance = axios.create({
+const LEMON_SQUEEZY_ENDPOINT = "https://api.lemonsqueezy.com/v1/";
+const lemonSqueezyApiInstance = axios.create({
   baseURL: LEMON_SQUEEZY_ENDPOINT,
   headers: {
     Accept: "application/vnd.api+json",
