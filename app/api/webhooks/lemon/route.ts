@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     // Handle order_created event
     if (eventType === "subscription_created" || eventType === "subscription_updated") {
       const { order_id, billing_anchor, status } = body.data.attributes;
-      const { custom_data } = body.data.meta;
+      const { custom_data } = body.meta;
       const { plan, credits, buyerId } = custom_data || {};
 
       console.log(custom_data);
